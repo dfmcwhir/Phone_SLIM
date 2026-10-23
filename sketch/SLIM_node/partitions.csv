@@ -1,0 +1,8 @@
+# Phone_SLIM flash layout (used automatically by Arduino because it's in the sketch folder)
+# 1.5 MB program, ~2.4 MB voicemail storage (about 5 minutes of messages), no OTA updates.
+# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,     0x9000,  0x5000,
+otadata,  data, ota,     0xe000,  0x2000,
+app0,     app,  ota_0,   0x10000, 0x180000,
+spiffs,   data, spiffs,  0x190000,0x260000,
+coredump, data, coredump,0x3F0000,0x10000,
