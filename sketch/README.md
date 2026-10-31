@@ -8,7 +8,7 @@ POTS Telephone Subscriber Line Interface Module
 
 * It is recommended to add a TO-220 heat sink to the 3.3v regulator in case it gets too hot. I used [Wakefield-Vette 274-3AB](https://www.digikey.com/en/products/detail/wakefield-vette/274-3AB/2351871)  along with thermal paste and a nut/screw I had around.  <br>
 * One pcb is needed for each phone/modem/etc.<br>
-* Calls between boards are made over WiFi (VOIP).  The phone line jack/relay between boards and the J5 Server/Sender jumper are no longer used.<br>
+* Calls between boards are made over WiFi (VOIP).  The phone line jack/relay between boards should still work but I haven't tested them again.<br>
 * Every board must connect to the same WiFi router.  Set the network on each board's config web page (below); the values in "arduino_secrets.h" are only used the first time.<br>
 * Phone numbers and the directory (which number is at which IP) are also set on the config page; "voip_config.h" holds the first-boot defaults.  Copy the same directory to every board.  Each board finds its own number from the "This phone's number" setting, or by its MAC or IP address in the directory.  For DHCP, give each board a DHCP reservation in the router (or set a static IP on the config page) so its address never changes.<br>
 * When a number is dialed it is matched against the directory and the call is placed to that board's IP address.  Numbers not in the directory get the "this is a recording" message, a board that is in use gives a busy signal.<br>
