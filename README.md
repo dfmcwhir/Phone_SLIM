@@ -1,6 +1,9 @@
 # Phone_SLIM
 POTS Telephone Subscriber Line Interface Module
 <br><br>![PCB](Assembled_PCB.jpg)<BR><BR>
+
+I made this fork to modify the firmware to add VOIP. The circuit and board are the same as what was in the original github with only minor modifications specified in the "Supply Noise" section below.  <br> <br>
+
 # Usage Notes
 > [!NOTE]
 > * This project is intended for hobby/personal use to explore how the plain old telephone service works.<br>
@@ -35,9 +38,10 @@ Three built in tests help find where noise comes from:
   * A steady whistle that gets louder until it squeals is feedback from the earpiece back into the microphone through the SLIC.  Turn VOIP_MIC_GAIN or VOIP_SPEAKER_GAIN down, or set VOIP_ECHO_SUPPRESS 1.<br><BR>
 
 # Supply noise
-The SLIC, its audio filters (LM358s) and the 15K/7.5K divider that biases the receive audio at ~1.1V all run from the same 3.3V regulator as the ESP32.  WiFi transmit bursts pull current spikes from that rail, and about 1/5 of any ripple on it goes straight into the receive audio through the bias divider.  That audio feeds both the ADC (GPIO32) and the MT8870, so supply noise causes both noisy calls and missed DTMF digits.  Things that help:
-* Filter the bias: lift the VCC end of the 15K bias resistor (Audio_Out side of the KS0835F sheet, the divider with the 7.5K to ground) and feed it from VCC through a 1K resistor with a 47-100uF capacitor to ground at the junction.
-* Add bulk capacitance (100-470uF plus 0.1uF) on the 3.3V rail near the ESP32 and near the SLIC, and/or power the analog parts from their own regulator.
+The initial VOIP call quality was really bad with a lot of noise. This was the reason a lot of the call troubleshooting options above were added. Here are the fixes I did to get it to be acceptable to me. Your milage may vary.
+* Add a 0.1uf capacitor between 3.3V and GND right at the SLIC and between 5V and GND on the ESP32.
+* Add a 0.1uf capacitor between GPIO32 and GND. This dumps a lot of the frequencies out of your voice while in a call, but it greatly helped with the noise. The value of the capacitor could probably be experimented with and optimized. 
+* Add bulk capacitance (100-470uF plus 0.1uF) to the 5V input.
 * The firmware decodes DTMF in software from the same audio as a backup to the MT8870 (VOIP_SOFTWARE_DTMF).  The serial monitor shows which decoder caught each key: `[dtmf MT8870]` or `[dtmf sw]`.<br><BR>
 
 # Parts
