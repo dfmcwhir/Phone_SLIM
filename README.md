@@ -2,7 +2,7 @@
 POTS Telephone Subscriber Line Interface Module
 <br><br>![PCB](Assembled_PCB.jpg)<BR><BR>
 
-I made this fork to modify the firmware to add VOIP. The circuit and board are the same as what was in the original github with only minor modifications specified in the "Supply Noise" section below.  <br> <br>
+I made this fork to modify the firmware to add VOIP. The circuit and board are the same as what was in the original github with only minor modifications specified in the "Supply Noise" section below. See the README in the sketch folder for more information on the new features. <br> <br>
 
 # Usage Notes
 > [!NOTE]
